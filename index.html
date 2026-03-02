@@ -87,7 +87,7 @@
           <p class="hero-sub">Real stock. Real advice. Great prices. Fast service.</p>
           <div class="hero-ctas">
             <a href="https://wa.me/27813192174" class="btn btn-wa btn-lg" target="_blank" rel="noopener" aria-label="WhatsApp TNT Dynamics">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.558 4.117 1.533 5.85L.073 23.927a.5.5 0 00.609.61l6.163-1.454A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5028-1.385l-.36-.214-3.733.881.899-3.643-.235-.374A9.783 9.783 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.520.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.558 4.117 1.533 5.85L.073 23.927a.5.5 0 00.609.61l6.163-1.454A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.028-1.385l-.36-.214-3.733.881.899-3.643-.235-.374A9.783 9.783 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
               WhatsApp Us
             </a>
             <a href="tel:+27835533679" class="btn btn-outline btn-lg" aria-label="Call Tania">
@@ -337,7 +337,11 @@
             <div class="stars" aria-label="5 stars">★★★★★</div>
             <span class="review-count">4 reviews</span>
           </div>
+          <a class="google-link" href="https://www.google.com/search?q=TNT+Dynamics+54+Loch+St+Meyerton+reviews" target="_blank" rel="noopener" aria-label="View TNT Dynamics reviews on Google">
+            View on Google Reviews →
+          </a>
           <h2 id="reviews-heading">What Our Customers Say</h2>
+          <p class="reviews-note">Excerpts shown below. See all reviews on Google.</p>
         </div>
         <div class="reviews-grid">
           <blockquote class="review-card">
@@ -426,13 +430,17 @@
           <div class="contact-form-wrap">
             <h3>Send Us a Message</h3>
             <p class="form-note">We'll get back to you as quickly as possible.</p>
+
             <!--
-              FORM INTEGRATION: Replace action="#" with your chosen backend:
-              - Formspree: action="https://formspree.io/f/YOUR_FORM_ID" method="POST"
-              - Netlify Forms: add netlify attribute and data-netlify="true"
-              - Current setup: JS intercepts submit and shows a success message.
+              FORMSPREE:
+              Replace YOUR_FORM_ID in action with your Formspree form endpoint.
+              Example: action="https://formspree.io/f/abcdwxyz"
             -->
-            <form id="contact-form" novalidate aria-label="Contact form">
+            <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate aria-label="Contact form">
+              <!-- Formspree fields -->
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hp-field" aria-hidden="true">
+              <input type="hidden" name="_subject" value="New website enquiry — TNT Dynamics">
+
               <div class="form-group">
                 <label for="fname">Your Name *</label>
                 <input type="text" id="fname" name="name" autocomplete="name" required placeholder="e.g. John Dlamini" aria-required="true">
@@ -449,6 +457,9 @@
               <div class="form-success" id="form-success" role="alert" aria-live="polite" hidden>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 <strong>Message sent!</strong> We'll be in touch soon.
+              </div>
+              <div class="form-error" id="form-error" role="alert" aria-live="polite" hidden>
+                <strong>Something went wrong.</strong> Please try again, or WhatsApp us.
               </div>
             </form>
           </div>
@@ -486,7 +497,7 @@
     </div>
     <div class="footer-bottom">
       <div class="container">
-        <p>© 2025 TNT Dynamics. All rights reserved. | <a href="mailto:tntdynamicssales@gmail.com">tntdynamicssales@gmail.com</a></p>
+        <p>© 2025 TNT Dynamics. All rights reserved. | <a href="mailto:tntdynamicssales@gmail.com">tntdynamicssales@gmail.com</a> | <a href="https://www.getreframe.co.za" target="_blank" rel="noopener">Designed by Reframe</a></p>
       </div>
     </div>
   </footer>
