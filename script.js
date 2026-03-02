@@ -61,33 +61,28 @@
     });
   });
 
-  // --- Contact Form (client-side only with success message) ---
+  // --- Contact Form (Formspree AJAX) ---
   /*
-   * TO CONNECT TO A REAL BACKEND:
-   * Option A — Formspree:
-   *   1. Create account at formspree.io
-   *   2. Replace `action="#"` in <form> with action="https://formspree.io/f/YOUR_ID"
-   *   3. Add method="POST" to the form
-   *   4. Remove or comment out the JS submit handler below.
-   *
-   * Option B — Netlify Forms:
-   *   1. Add `netlify` attribute and `data-netlify="true"` to <form>
-   *   2. Deploy via Netlify — it auto-handles submissions.
+   * Formspree integration:
+   * 1) Replace the form action URL with your Formspree endpoint:
+   *    action="https://formspree.io/f/YOUR_FORM_ID"
+   * 2) Submissions are sent via fetch() for a smooth success state.
+   * 3) If JS is disabled, the form will still POST normally to Formspree.
    */
   var form    = document.getElementById('contact-form');
   var success = document.getElementById('form-success');
+  var errorEl = document.getElementById('form-error');
 
   if (form && success) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      // Simple validation
+    form.addEventListener('submit', async function (e) {
+      // Basic validation
       var name    = form.querySelector('#fname');
       var contact = form.querySelector('#fcontact');
-      var valid   = true;
+      var hp      = form.querySelector('input[name="_gotcha"]');
 
+      var valid = true;
       [name, contact].forEach(function (field) {
-        if (!field.value.trim()) {
+        if (!field || !field.value.trim()) {
           field.style.borderColor = '#E53E3E';
           field.style.boxShadow   = '0 0 0 3px rgba(229,62,62,0.12)';
           valid = false;
@@ -97,23 +92,65 @@
           }, { once: true });
         }
       });
+      if (!valid) {
+        e.preventDefault();
+        return;
+      }
 
-      if (!valid) return;
-
-      // Simulate submission (replace with real fetch() call if needed)
-      var submitBtn = form.querySelector('[type="submit"]');
-      submitBtn.textContent = 'Sending…';
-      submitBtn.disabled = true;
-
-      setTimeout(function () {
+      // Honeypot filled = likely bot; pretend success but do nothing
+      if (hp && hp.value) {
+        e.preventDefault();
         form.reset();
-        submitBtn.textContent = 'Send Message';
-        submitBtn.disabled = false;
+        if (errorEl) errorEl.hidden = true;
+        success.hidden = false;
+        setTimeout(function () { success.hidden = true; }, 6000);
+        return;
+      }
+
+      var action = form.getAttribute('action') || '';
+      // If user hasn't replaced the placeholder, show a helpful error
+      if (action.includes('YOUR_FORM_ID')) {
+        e.preventDefault();
+        if (errorEl) {
+          errorEl.hidden = false;
+          errorEl.innerHTML = '<strong>Form not connected yet.</strong> Please update the Formspree URL in <code>index.html</code>, or WhatsApp us.';
+        }
+        return;
+      }
+
+      // Submit via AJAX
+      e.preventDefault();
+
+      var submitBtn = form.querySelector('[type="submit"]');
+      var originalText = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) {
+        submitBtn.textContent = 'Sending…';
+        submitBtn.disabled = true;
+      }
+      if (errorEl) errorEl.hidden = true;
+
+      try {
+        var formData = new FormData(form);
+        var res = await fetch(action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (!res.ok) throw new Error('Bad response');
+
+        form.reset();
         success.hidden = false;
         success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        // Hide after 6s
         setTimeout(function () { success.hidden = true; }, 6000);
-      }, 800);
+      } catch (err) {
+        if (errorEl) errorEl.hidden = false;
+      } finally {
+        if (submitBtn) {
+          submitBtn.textContent = originalText || 'Send Message';
+          submitBtn.disabled = false;
+        }
+      }
     });
   }
 
