@@ -328,7 +328,7 @@ h4 { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spac
 /* --- PRODUCTS --------------------------------------------- */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -377,7 +377,7 @@ h4 { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spac
 /* --- SERVICES --------------------------------------------- */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
 }
 .service-item {
@@ -412,7 +412,7 @@ h4 { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spac
 /* --- WHY TNT ---------------------------------------------- */
 .why-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
 }
 .why-card {
@@ -465,9 +465,11 @@ h4 { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spac
 
 .reviews-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
   margin-bottom: 24px;
+  max-width: 920px;
+  margin-inline: auto;
 }
 .review-card {
   background: #fff;
@@ -687,8 +689,59 @@ h4 { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spac
   .float-wa { display: none; }
 }
 
+
+/* --- REVIEWS (layout-safe) ------------------------------- */
+.google-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin: 0 auto 12px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+  box-shadow: var(--shadow);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--blue);
+  transition: transform var(--transition), box-shadow var(--transition), color var(--transition);
+}
+.google-link:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  color: var(--blue-dark);
+}
+.google-link:focus-visible{ outline: 3px solid var(--blue); outline-offset: 3px; }
+
+.reviews-note{
+  margin-top: 10px;
+  color: var(--text-mid);
+  font-size: 0.95rem;
+}
+
+/* --- FORMSPREE HELPERS ----------------------------------- */
+.hp-field{ display:none !important; }
+.form-error{
+  margin-top: 14px;
+  padding: 14px 18px;
+  background: #FFF5F5;
+  border: 1px solid #FEB2B2;
+  border-radius: 8px;
+  color: #742A2A;
+  font-weight: 600;
+}
+.form-error code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.85em;
+}
+
 /* --- RESPONSIVE ------------------------------------------- */
 @media (max-width: 1024px) {
+  /* grid downshift */
+  .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .footer-brand { grid-column: 1 / -1; }
 }
@@ -722,13 +775,18 @@ h4 { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spac
   .footer-inner { grid-template-columns: 1fr; gap: 32px; }
   .footer-brand { grid-column: auto; }
 
-  .product-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .why-grid { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 480px) {
   .hero-ctas { flex-direction: column; }
   .hero-ctas .btn { justify-content: center; }
+  .product-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: 1fr; }
   .contact-form-wrap { padding: 24px 18px; }
   .float-wa span { display: none; }
